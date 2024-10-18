@@ -32,13 +32,13 @@ jobs:
       # Step 4: Run the Python scripts
       - name: Run 01.py
         run: |
-          python scripts/01.py
+          python script/01.py
       - name: Run 02.py
         run: |
-          python scripts/02.py
+          python script/02.py
       - name: Run 03.py
         run: |
-          python scripts/03.py
+          python script/03.py
 
       # Step 5: Upload artifacts (output files) to main directory
       - name: Upload artifacts
