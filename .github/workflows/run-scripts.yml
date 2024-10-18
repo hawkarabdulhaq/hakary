@@ -1,6 +1,5 @@
-name: Run Python Scripts
+name: Run and Deploy Python Scripts
 
-# Trigger workflow on push or pull request
 on:
   push:
     branches:
@@ -10,7 +9,7 @@ on:
       - main
 
 jobs:
-  run-scripts:
+  run-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Use any Python 3.x version
+          python-version: '3.x'
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -32,18 +31,24 @@ jobs:
       # Step 4: Run the Python scripts
       - name: Run 01.py
         run: |
-          python script/01.py
+          python scripts/01.py
       - name: Run 02.py
         run: |
-          python script/02.py
+          python scripts/02.py
       - name: Run 03.py
         run: |
-          python script/03.py
+          python scripts/03.py
 
-      # Step 5: Upload artifacts (output files) to main directory
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: output-files
-          path: ./  # Save all generated artifacts in the main directory
+      # Step 5: Move output files to docs folder for GitHub Pages
+      - name: Move output files to docs folder
+        run: |
+          mv *.html docs/  # Adjust this if your artifact isn't an HTML file
 
+      # Step 6: Commit changes to docs folder
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git commit -m "Deploy artifacts to docs folder"
+          git push origin main
