@@ -39,12 +39,17 @@ jobs:
         run: |
           python script/03.py
 
-      # Step 5: Move and rename the output file to docs folder as index.html
+      # Step 5: Ensure the docs directory exists
+      - name: Create docs directory if not exists
+        run: |
+          mkdir -p docs
+
+      # Step 6: Move the generated HTML file to the docs folder as index.html
       - name: Move and rename output to index.html
         run: |
           mv output_file.html docs/index.html  # Replace output_file.html with your actual output filename
 
-      # Step 6: Commit changes to docs folder
+      # Step 7: Commit changes to docs folder
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
