@@ -42,7 +42,7 @@ jobs:
       # Step 5: Move output files to docs folder for GitHub Pages
       - name: Move output files to docs folder
         run: |
-          mv output_file.html docs/index.html  # Adjust this if your artifact isn't an HTML file
+          mv output_file.html docs/output_file.html  # Adjust this if your artifact isn't an HTML file
 
       # Step 6: Commit changes to docs folder
       - name: Commit and push changes
