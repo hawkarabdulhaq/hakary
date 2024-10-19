@@ -1,0 +1,6 @@
+pandas
+openpyxl
+gspread
+gspread-dataframe
+requests
+folium
