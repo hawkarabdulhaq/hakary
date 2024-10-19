@@ -1,12 +1,9 @@
-name: Run and Deploy Python Scripts
+name: Run and Deploy Python Scripts to gh-pages
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Triggers deployment when pushing to the main branch
 
 jobs:
   run-and-deploy:
@@ -48,18 +45,19 @@ jobs:
       - name: Move index.html to docs
         run: mv index.html docs/index.html
 
-      # Step 9: Commit and push changes to docs folder
-      - name: Commit and push changes
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          git commit -m "Deploy index.html to docs folder"
-          git push origin main
+      # Step 9: Disable Jekyll (optional but recommended)
+      - name: Disable Jekyll
+        run: touch docs/.nojekyll
 
-      # Step 10: Deploy to GitHub Pages
+      # Step 10: List files in docs directory (optional for debugging)
+      - name: List files in docs directory
+        run: ls -l docs
+
+      # Step 11: Deploy to gh-pages branch using peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./docs  # This is where the index.html is located
+          publish_branch: gh-pages
+          keep_files: true  # Optional: Keeps existing files in gh-pages branch
