@@ -28,19 +28,27 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      # Step 4: Run the Python script to generate the map
-      - name: Run Python script
+      # Step 4: Run the first Python script (01.py)
+      - name: Run 01.py
         run: python script/01.py
 
-      # Step 5: Ensure the docs directory exists
+      # Step 5: Run the second Python script (02.py)
+      - name: Run 02.py
+        run: python script/02.py
+
+      # Step 6: Run the third Python script (03.py) to generate the map
+      - name: Run 03.py
+        run: python script/03.py
+
+      # Step 7: Ensure the docs directory exists
       - name: Create docs directory if not exists
         run: mkdir -p docs
 
-      # Step 6: Move the generated index.html file to the docs folder
+      # Step 8: Move the generated index.html to docs folder
       - name: Move index.html to docs
         run: mv index.html docs/index.html
 
-      # Step 7: Commit and push changes to docs folder
+      # Step 9: Commit and push changes to docs folder
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
