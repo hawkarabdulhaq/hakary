@@ -31,6 +31,6 @@ for index, row in above_25_data.iterrows():
     ).add_to(m)
 
 # Step 7: Save the map to an HTML file for viewing
-m.save('temperature_map.html')
+m.save('index.html')
 
 print("Map has been created and saved as 'temperature_map.html'.")
