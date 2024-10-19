@@ -30,7 +30,7 @@ for index, row in above_25_data.iterrows():
         icon=folium.Icon(color='red')
     ).add_to(m)
 
-# Step 7: Save the map to an HTML file named 'index.html'
+# Step 7: Save the map to a fully self-contained HTML file
 m.save('index.html')
 
 print("Map has been created and saved as 'index.html'.")
