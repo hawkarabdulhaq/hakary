@@ -1,4 +1,4 @@
-# Step 1: Import necessary libraries
+# Step 1: Import necessary librariess
 import pandas as pd
 import requests
 from openpyxl import load_workbook
