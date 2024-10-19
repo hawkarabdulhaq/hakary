@@ -3,61 +3,44 @@ name: Run and Deploy Python Scripts to gh-pages
 on:
   push:
     branches:
-      - main  # Triggers deployment when pushing to the main branch
+      - main
 
 jobs:
   run-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # Step 4: Run the first Python script (01.py)
       - name: Run 01.py
         run: python script/01.py
 
-      # Step 5: Run the second Python script (02.py)
       - name: Run 02.py
         run: python script/02.py
 
-      # Step 6: Run the third Python script (03.py) to generate the map
       - name: Run 03.py
         run: python script/03.py
 
-      # Step 7: Ensure the docs directory exists
-      - name: Create docs directory if not exists
-        run: mkdir -p docs
-
-      # Step 8: Move the generated index.html to docs folder
-      - name: Move index.html to docs
-        run: mv index.html docs/index.html
-
-      # Step 9: Disable Jekyll (optional but recommended)
       - name: Disable Jekyll
-        run: touch docs/.nojekyll
+        run: touch .nojekyll  # At the root, not in a docs/ folder
 
-      # Step 10: List files in docs directory (optional for debugging)
-      - name: List files in docs directory
-        run: ls -l docs
+      - name: List files for verification
+        run: ls -l  # List files at the root, should include index.html
 
-      # Step 11: Deploy to gh-pages branch using peaceiris/actions-gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs  # This is where the index.html is located
+          publish_dir: ./  # Use root directory
           publish_branch: gh-pages
-          keep_files: true  # Optional: Keeps existing files in gh-pages branch
+          keep_files: true
